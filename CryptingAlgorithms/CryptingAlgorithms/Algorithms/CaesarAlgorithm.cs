@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace CryptingAlgorithms.Algorithms
 {
     class CaesarAlgorithm : ICryptingAlgorithm
@@ -32,5 +33,6 @@ namespace CryptingAlgorithms.Algorithms
             }
             return cipherText;
         }
+
     }
 }
