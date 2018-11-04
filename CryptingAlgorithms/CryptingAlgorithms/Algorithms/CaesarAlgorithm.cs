@@ -11,12 +11,15 @@ namespace CryptingAlgorithms.Algorithms
     {
         public string Decipher(string cipherText, int key)
         {
+            key = Math.Abs(key) % 26;
             return Encipher(cipherText, (26 - key));
         }
 
         public string Encipher(string plainText, int key)
         {
             string cipherText = "";
+
+            key = Math.Abs(key) % 26;
 
             foreach (var character in plainText)
             {
@@ -28,6 +31,8 @@ namespace CryptingAlgorithms.Algorithms
                 {
                     char startAsciiCode = char.IsUpper(character) ? 'A' : 'a';
                     cipherText += (char)((((character + key) - startAsciiCode) % 26) + startAsciiCode);
+
+
                 }
                 
             }

@@ -26,13 +26,16 @@ namespace CryptingAlgorithms
             Console.WriteLine("The encrypted text is:");
             Console.WriteLine(cipherText);
 
-            var charactersDistribution = GetRepetitionOfEachCharacter(cipherText);
+
+            int numberOfEncodedCharacters = 0;
+            var charactersDistribution = GetRepetitionOfEachCharacter(cipherText, ref numberOfEncodedCharacters);
 
             foreach (var character in charactersDistribution)
             {
                 char c = character.Key;
                 int cnt = character.Value;
-                Console.WriteLine("The character {0} it is used {1} times",c,cnt);
+                double percentage = (cnt * 100) / numberOfEncodedCharacters;
+                Console.WriteLine("The character {0} it is used {1} %", c, percentage);
             }
 
             var writer = new StreamWriter(@"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\CipherText.txt",false , System.Text.Encoding.UTF8);
@@ -43,9 +46,10 @@ namespace CryptingAlgorithms
 
             Console.WriteLine("The plain text is:");
             Console.WriteLine(decipheredText);
+            Console.ReadLine();
         }
 
-        public static Dictionary<char, int> GetRepetitionOfEachCharacter(string cipherText)
+        public static Dictionary<char, int> GetRepetitionOfEachCharacter(string cipherText, ref int numberOfEncodedCharacters)
         {
             var characters = new Dictionary<char, int>();
             for (int i = 0; i < cipherText.Length; i++)
@@ -53,6 +57,7 @@ namespace CryptingAlgorithms
                 char c = cipherText[i];
                 if (char.IsLetter(c))
                 {
+                    numberOfEncodedCharacters++;
                     if (characters.ContainsKey(c))
                     {
                         characters[c]++;
