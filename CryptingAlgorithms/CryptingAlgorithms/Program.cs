@@ -12,41 +12,104 @@ namespace CryptingAlgorithms
     {
         static void Main(string[] args)
         {
-            var reader = new StreamReader(@"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\PlainText.txt", System.Text.Encoding.UTF8);
-            var plainText = reader.ReadToEnd();
-            reader.Close();
+            ICryptingAlgorithm cryptingAlgorithm = new VigenereAlgorithm();
 
-            Console.WriteLine("Give the encription key.The key should be an integer in the interval [-25,25]");
-            int key = int.Parse(Console.ReadLine());
+            //StreamReader reader = new StreamReader(@"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\PlayfairCipherText.txt", System.Text.Encoding.UTF8);
+            //string cipherText = reader.ReadToEnd();
+            //reader.Close();
 
-            ICryptingAlgorithm cryptingAlgorithm = new CaesarAlgorithm();
+            //string plainText = cryptingAlgorithm.Encipher(cipherText, "ROYALNEWZDVY");
 
-            var cipherText = cryptingAlgorithm.Encipher(plainText, key);
+            //StreamWriter writer = new StreamWriter(@"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\PlayfairPlainText.txt", false, System.Text.Encoding.UTF8);
+            //writer.Write(plainText);
+            //writer.Close();
 
-            Console.WriteLine("The encrypted text is:");
-            Console.WriteLine(cipherText);
+           
 
+            string plainText = cryptingAlgorithm.Encipher("Ana are mere", "DANI");
 
-            int numberOfEncodedCharacters = 0;
-            var charactersDistribution = GetRepetitionOfEachCharacter(cipherText, ref numberOfEncodedCharacters);
-
-            foreach (var character in charactersDistribution)
-            {
-                char c = character.Key;
-                int cnt = character.Value;
-                double percentage = (cnt * 100) / numberOfEncodedCharacters;
-                Console.WriteLine("The character {0} it is used {1} %", c, percentage);
-            }
-
-            var writer = new StreamWriter(@"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\CipherText.txt",false , System.Text.Encoding.UTF8);
-            writer.Write(cipherText);
-            writer.Close();
-
-            var decipheredText = cryptingAlgorithm.Decipher(cipherText,key);
-
-            Console.WriteLine("The plain text is:");
-            Console.WriteLine(decipheredText);
             Console.ReadLine();
+
+            //int option = 999;
+            //do
+            //{
+            //    bool isInvalidOption = false;
+
+            //    Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere \n 0=Exit");
+            //    option = Int32.Parse(Console.ReadLine());
+
+            //    string readPath = string.Empty;
+            //    string writePath = string.Empty;
+            //    string key = string.Empty;
+
+            //    switch (option)
+            //    {
+            //        case 1:
+            //            readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\CaesarPlainText.txt";
+            //            writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\CaesarCipherText.txt";
+            //            Console.WriteLine("Give the encription key.The key should be an integer in the interval [-25,25]");
+            //            key = Console.ReadLine();
+            //            cryptingAlgorithm = new CaesarAlgorithm();
+            //            break;
+            //        case 2:
+            //            readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\PlayfairPlainText.txt";
+            //            writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\PlayfairCipherText.txt";
+            //            Console.WriteLine("Give the password:");
+            //            key = Console.ReadLine();
+            //            cryptingAlgorithm = new PlayfairAlgorithm();
+            //            break;
+            //        case 3:
+            //            readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\VigenerePlainText.txt";
+            //            writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\VigenereCipherText.txt";
+            //            Console.WriteLine("Give the password:");
+            //            key = Console.ReadLine();
+            //            cryptingAlgorithm = new VigenereAlgorithm();
+            //            break;
+            //        default:
+            //            Console.WriteLine("You chose an invalid option. Please choose a valid one!");
+            //            isInvalidOption = true;
+            //            break;
+
+            //    }
+
+            //    if (!isInvalidOption)
+            //    {
+            //        StreamReader reader = new StreamReader(readPath, System.Text.Encoding.UTF8);
+            //        string plainText = reader.ReadToEnd();
+            //        reader.Close();
+
+            //        string cipherText = cryptingAlgorithm.Encipher(plainText, key);
+
+            //        Console.WriteLine("The encrypted text is:");
+            //        Console.WriteLine(cipherText);
+
+            //        if (option == 1)
+            //        {
+            //            int numberOfEncodedCharacters = 0;
+            //            var charactersDistribution = GetRepetitionOfEachCharacter(cipherText, ref numberOfEncodedCharacters);
+
+            //            foreach (var character in charactersDistribution)
+            //            {
+            //                char c = character.Key;
+            //                int cnt = character.Value;
+            //                double percentage = (cnt * 100) / numberOfEncodedCharacters;
+            //                Console.WriteLine("The character {0} it is used {1} %", c, percentage);
+            //            }
+            //        }
+
+            //        StreamWriter writer = new StreamWriter(writePath, false, System.Text.Encoding.UTF8);
+            //        writer.Write(cipherText);
+            //        writer.Close();
+
+            //        string decipheredText = cryptingAlgorithm.Decipher(cipherText, key);
+
+            //        Console.WriteLine("The plain text is:");
+            //        Console.WriteLine(decipheredText);
+            //    }
+
+
+            //} while (option != 0);
+
         }
 
         public static Dictionary<char, int> GetRepetitionOfEachCharacter(string cipherText, ref int numberOfEncodedCharacters)

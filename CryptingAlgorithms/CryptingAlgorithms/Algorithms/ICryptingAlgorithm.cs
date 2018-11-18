@@ -8,7 +8,7 @@ namespace CryptingAlgorithms.Algorithms
 {
     interface ICryptingAlgorithm
     {
-        string Encipher(string input, int key);
-        string Decipher(string input, int key);
+        string Encipher(string input, string encriptionKey);
+        string Decipher(string input, string encriptionKey);
     }
 }

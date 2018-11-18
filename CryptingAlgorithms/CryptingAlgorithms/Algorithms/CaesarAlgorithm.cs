@@ -9,17 +9,18 @@ namespace CryptingAlgorithms.Algorithms
 {
     class CaesarAlgorithm : ICryptingAlgorithm
     {
-        public string Decipher(string cipherText, int key)
+        public string Decipher(string cipherText, string encriptionKey)
         {
+            int key = Int32.Parse(encriptionKey);
             key = Math.Abs(key) % 26;
-            return Encipher(cipherText, (26 - key));
+            return Encipher(cipherText, (26 - key).ToString());
         }
 
-        public string Encipher(string plainText, int key)
+        public string Encipher(string plainText, string encriptionKey)
         {
             string cipherText = "";
 
-            key = Math.Abs(key) % 26;
+            int key = Math.Abs(Int32.Parse(encriptionKey)) % 26;
 
             foreach (var character in plainText)
             {
