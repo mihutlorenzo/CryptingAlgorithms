@@ -21,6 +21,11 @@ namespace CryptingAlgorithms.Algorithms
             {
                 int row = GetIndex(key[i]);
 
+                if (i == 25)
+                {
+
+                }
+
                 plainText += GetLetterFromTheMap(alphabetMap, cipheredText[i], row);
 
             }
@@ -46,7 +51,7 @@ namespace CryptingAlgorithms.Algorithms
             int index = 0;
             string alphabetEN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            for (int i = 0; i< 25; i++)
+            for (int i = 0; i< 26; i++)
             {
                 if (alphabetMap[row, i] == cipheredLetter)
                 {
@@ -72,9 +77,8 @@ namespace CryptingAlgorithms.Algorithms
             {
                 int row = GetIndex(key[i]);
                 int column = GetIndex(plainText[i]);
-
-                cipheredText += alphabetMap[row, column];
                 
+                cipheredText += alphabetMap[row, column];
             }
             AdjustOutput(ref cipheredText);
             return cipheredText;
@@ -103,11 +107,11 @@ namespace CryptingAlgorithms.Algorithms
             while (textLength >= key.Length)
             {
                 key += encriptionKey;
-                if(key.Length > 26)
-                {
-                    key = key.Substring(0, 25);
-                    break;
-                }
+                //if(key.Length > 26)
+                //{
+                //    key = key.Substring(0, 26);
+                //    break;
+                //}
             }
             return key;
         }
@@ -116,9 +120,9 @@ namespace CryptingAlgorithms.Algorithms
         {
             char[,] alphabetMap = new char[26, 26];
             string alphabetEN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            for(int i= 0; i<25; i++)
-                for(int j = 0; j<25; j++)
-                    alphabetMap[i, j] = alphabetEN[(i + j) % 25];
+            for(int i= 0; i<26; i++)
+                for(int j = 0; j<26; j++)
+                    alphabetMap[i, j] = alphabetEN[(i + j) % 26];
             return alphabetMap;
         }
     }
