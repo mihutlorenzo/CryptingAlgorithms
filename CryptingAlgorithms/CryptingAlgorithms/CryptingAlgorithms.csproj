@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\AutokeyAlgorithm.cs" />
+    <Compile Include="Algorithms\BeaufortAlgorithm.cs" />
     <Compile Include="Algorithms\CaesarAlgorithm.cs" />
+    <Compile Include="Algorithms\FourSquareAlgorithm.cs" />
     <Compile Include="Algorithms\ICryptingAlgorithm.cs" />
     <Compile Include="Algorithms\PlayfairAlgorithm.cs" />
     <Compile Include="Algorithms\VigenereAlgorithm.cs" />

@@ -13,6 +13,9 @@ namespace CryptingAlgorithms
 
         // cheie Playfair : ROYALNEWZDVY
         // cheie Vigenere : TDBTATIALU
+        // cheie Beaufort : TITAOMAPWMAE
+        // cheie Autokey : BERCU
+        // cheie FourSquare : BERCU|ADRIAN
         static void Main(string[] args)
         {
             ICryptingAlgorithm cryptingAlgorithm = new VigenereAlgorithm();
@@ -39,7 +42,7 @@ namespace CryptingAlgorithms
             {
                 bool isInvalidOption = false;
 
-                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere \n 0=Exit");
+                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere  \n 4=Beaufort \n 5=Autokey \n 6=Four-Square \n 0=Exit");
                 option = Int32.Parse(Console.ReadLine());
 
                 string readPath = string.Empty;
@@ -96,6 +99,27 @@ namespace CryptingAlgorithms
                         Console.WriteLine("Give the password:");
                         key = Console.ReadLine();
                         cryptingAlgorithm = new VigenereAlgorithm();
+                        break;
+                    case 4:
+                        readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\BeaufortCipherText.txt";
+                        writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\BeaufortPlainText.txt";
+                        Console.WriteLine("Give the password:");
+                        key = Console.ReadLine();
+                        cryptingAlgorithm = new BeaufortAlgorithm();
+                        break;
+                    case 5:
+                        readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\AutokeyCipherText.txt";
+                        writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\AutokeyPlainText.txt";
+                        Console.WriteLine("Give the password:");
+                        key = Console.ReadLine();
+                        cryptingAlgorithm = new AutokeyAlgorithm();
+                        break;
+                    case 6:
+                        readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\FourSquareCipherText.txt";
+                        writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\FourSquarePlainText.txt";
+                        Console.WriteLine("Give the password:");
+                        key = Console.ReadLine();
+                        cryptingAlgorithm = new FourSquareAlgorithm();
                         break;
                     default:
                         Console.WriteLine("You chose an invalid option. Please choose a valid one!");

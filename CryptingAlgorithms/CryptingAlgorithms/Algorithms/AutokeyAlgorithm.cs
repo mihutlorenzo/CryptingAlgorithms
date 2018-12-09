@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace CryptingAlgorithms.Algorithms
 {
-    class VigenereAlgorithm : ICryptingAlgorithm
+    class AutokeyAlgorithm: ICryptingAlgorithm
     {
+        private string _key;
+
         public string Decipher(string input, string encriptionKey)
         {
             string cipheredText = FormatText(input);
-            string key = BuildThePassword(cipheredText.Length, encriptionKey);
+            _key = encriptionKey + "ANAAREMERESIBERE";
             char[,] alphabetMap = GenerateMap();
 
             string plainText = string.Empty;
@@ -19,7 +21,7 @@ namespace CryptingAlgorithms.Algorithms
 
             for (int i = 0; i < cipheredText.Length; i++)
             {
-                int row = GetIndex(key[i]);
+                int row = GetIndex(_key[i]);
 
                 plainText += GetLetterFromTheMap(alphabetMap, cipheredText[i], row);
 
@@ -31,9 +33,9 @@ namespace CryptingAlgorithms.Algorithms
 
         private void AdjustOutput(ref string text)
         {
-            for(int i = 0; i < text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
-                if(((i+1)%6 == 0) && (i>0))
+                if (((i + 1) % 6 == 0) && (i > 0))
                 {
                     text = text.Insert(i, " ");
                 }
@@ -46,7 +48,7 @@ namespace CryptingAlgorithms.Algorithms
             int index = 0;
             string alphabetEN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            for (int i = 0; i< 26; i++)
+            for (int i = 0; i < 26; i++)
             {
                 if (alphabetMap[row, i] == cipheredLetter)
                 {
@@ -62,17 +64,17 @@ namespace CryptingAlgorithms.Algorithms
         public string Encipher(string input, string encriptionKey)
         {
             string plainText = FormatText(input);
-            string key = BuildThePassword(plainText.Length, encriptionKey);
+          
             char[,] alphabetMap = GenerateMap();
 
             string cipheredText = string.Empty;
-           
 
-            for(int i =0; i< plainText.Length; i++)
+
+            for (int i = 0; i < plainText.Length; i++)
             {
-                int row = GetIndex(key[i]);
+                int row = GetIndex(_key[i]);
                 int column = GetIndex(plainText[i]);
-                
+
                 cipheredText += alphabetMap[row, column];
             }
             AdjustOutput(ref cipheredText);
@@ -115,10 +117,11 @@ namespace CryptingAlgorithms.Algorithms
         {
             char[,] alphabetMap = new char[26, 26];
             string alphabetEN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            for(int i= 0; i<26; i++)
-                for(int j = 0; j<26; j++)
+            for (int i = 0; i < 26; i++)
+                for (int j = 0; j < 26; j++)
                     alphabetMap[i, j] = alphabetEN[(i + j) % 26];
             return alphabetMap;
         }
     }
 }
+
