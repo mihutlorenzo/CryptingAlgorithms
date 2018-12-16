@@ -16,9 +16,25 @@ namespace CryptingAlgorithms
         // cheie Beaufort : TITAOMAPWMAE
         // cheie Autokey : BERCU
         // cheie FourSquare : BERCU|ADRIAN
+        // cheie ColumnarTransposition : pangram
+        //PAROLA : DNFTBEIOFEONAWOE
+        // : DNFTBEIOFAW
         static void Main(string[] args)
         {
-            ICryptingAlgorithm cryptingAlgorithm = new VigenereAlgorithm();
+            ICryptingAlgorithm cryptingAlgorithm = new PlayfairAlgorithm();
+
+            //Console.WriteLine("Give the encription key.The key should be an integer in the interval [-25,25]");
+            //string key1 = Console.ReadLine();
+
+            //StreamReader reader = new StreamReader(@"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\CipherText4.txt", System.Text.Encoding.UTF8);
+            //string plainText = reader.ReadToEnd();
+            //reader.Close();
+
+            //string cipherText = cryptingAlgorithm.Decipher(plainText, key1);
+
+            //Console.WriteLine("The encrypted text is:");
+            //Console.WriteLine(cipherText);
+            //Console.ReadLine();
 
             //StreamReader reader = new StreamReader(@"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\PlayfairCipherText.txt", System.Text.Encoding.UTF8);
             //string cipherText = reader.ReadToEnd();
@@ -42,7 +58,7 @@ namespace CryptingAlgorithms
             {
                 bool isInvalidOption = false;
 
-                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere  \n 4=Beaufort \n 5=Autokey \n 6=Four-Square \n 0=Exit");
+                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere  \n 4=Beaufort \n 5=Autokey \n 6=Four-Square \n 7= ColumnarTransposition \n 0=Exit");
                 option = Int32.Parse(Console.ReadLine());
 
                 string readPath = string.Empty;
@@ -120,6 +136,13 @@ namespace CryptingAlgorithms
                         Console.WriteLine("Give the password:");
                         key = Console.ReadLine();
                         cryptingAlgorithm = new FourSquareAlgorithm();
+                        break;
+                    case 7:
+                        readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\ColumnarTranspositionCipherText.txt";
+                        writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\ColumnarTranspositionPlainText.txt";
+                        Console.WriteLine("Give the password:");
+                        key = Console.ReadLine();
+                        cryptingAlgorithm = new ColumnarTranspositionAlgorithm();
                         break;
                     default:
                         Console.WriteLine("You chose an invalid option. Please choose a valid one!");

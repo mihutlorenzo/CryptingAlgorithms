@@ -48,6 +48,7 @@
     <Compile Include="Algorithms\FourSquareAlgorithm.cs" />
     <Compile Include="Algorithms\ICryptingAlgorithm.cs" />
     <Compile Include="Algorithms\PlayfairAlgorithm.cs" />
+    <Compile Include="Algorithms\ColumnarTranspositionAlgorithm.cs" />
     <Compile Include="Algorithms\VigenereAlgorithm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
