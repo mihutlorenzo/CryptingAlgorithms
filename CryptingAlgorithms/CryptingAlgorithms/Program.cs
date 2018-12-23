@@ -17,8 +17,9 @@ namespace CryptingAlgorithms
         // cheie Autokey : BERCU
         // cheie FourSquare : BERCU|ADRIAN
         // cheie ColumnarTransposition : pangram
-        //PAROLA : DNFTBEIOFEONAWOE
-        // : DNFTBEIOFAW
+        // PAROLA : DNFTBEIOFEONAWOE
+        // key: DNFTBEIOFAW
+        // cheie Bifid : DANILACOSMIN
         static void Main(string[] args)
         {
             ICryptingAlgorithm cryptingAlgorithm = new PlayfairAlgorithm();
@@ -58,7 +59,7 @@ namespace CryptingAlgorithms
             {
                 bool isInvalidOption = false;
 
-                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere  \n 4=Beaufort \n 5=Autokey \n 6=Four-Square \n 7= ColumnarTransposition \n 0=Exit");
+                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere  \n 4=Beaufort \n 5=Autokey \n 6=Four-Square \n 7=ColumnarTransposition \n 8=Bifid \n 0=Exit");
                 option = Int32.Parse(Console.ReadLine());
 
                 string readPath = string.Empty;
@@ -144,6 +145,13 @@ namespace CryptingAlgorithms
                         key = Console.ReadLine();
                         cryptingAlgorithm = new ColumnarTranspositionAlgorithm();
                         break;
+                    case 8:
+                        readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\BifidCipherText.txt";
+                        writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\BifidPlainText.txt";
+                        Console.WriteLine("Give the password:");
+                        key = Console.ReadLine();
+                        cryptingAlgorithm = new BifidAlgorithm();
+                        break;
                     default:
                         Console.WriteLine("You chose an invalid option. Please choose a valid one!");
                         isInvalidOption = true;
@@ -159,17 +167,23 @@ namespace CryptingAlgorithms
 
                     text = cryptingAlgorithm.Decipher(text, key);
 
-                    Console.WriteLine("The decrypted text is:");
-                    Console.WriteLine(text);
+                    //StreamReader reader = new StreamReader(readPath, System.Text.Encoding.UTF8);
+                    //string text = reader.ReadToEnd();
+                    //reader.Close();
 
-                    StreamWriter writer = new StreamWriter(writePath, false, System.Text.Encoding.UTF8);
-                    writer.Write(text);
-                    writer.Close();
+                    //text = cryptingAlgorithm.Decipher(text, key);
 
-                    text = cryptingAlgorithm.Encipher(text, key);
+                    //Console.WriteLine("The decrypted text is:");
+                    //Console.WriteLine(text);
 
-                    Console.WriteLine("The ciphered text is:");
-                    Console.WriteLine(text);
+                    //StreamWriter writer = new StreamWriter(writePath, false, System.Text.Encoding.UTF8);
+                    //writer.Write(text);
+                    //writer.Close();
+
+                    //text = cryptingAlgorithm.Encipher(text, key);
+
+                    //Console.WriteLine("The ciphered text is:");
+                    //Console.WriteLine(text);
                 }
 
             } while (option != 0);
