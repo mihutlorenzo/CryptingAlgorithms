@@ -167,23 +167,17 @@ namespace CryptingAlgorithms
 
                     text = cryptingAlgorithm.Decipher(text, key);
 
-                    //StreamReader reader = new StreamReader(readPath, System.Text.Encoding.UTF8);
-                    //string text = reader.ReadToEnd();
-                    //reader.Close();
+                    Console.WriteLine("The decrypted text is:");
+                    Console.WriteLine(text);
 
-                    //text = cryptingAlgorithm.Decipher(text, key);
+                    StreamWriter writer = new StreamWriter(writePath, false, System.Text.Encoding.UTF8);
+                    writer.Write(text);
+                    writer.Close();
 
-                    //Console.WriteLine("The decrypted text is:");
-                    //Console.WriteLine(text);
+                    text = cryptingAlgorithm.Encipher(text, key);
 
-                    //StreamWriter writer = new StreamWriter(writePath, false, System.Text.Encoding.UTF8);
-                    //writer.Write(text);
-                    //writer.Close();
-
-                    //text = cryptingAlgorithm.Encipher(text, key);
-
-                    //Console.WriteLine("The ciphered text is:");
-                    //Console.WriteLine(text);
+                    Console.WriteLine("The ciphered text is:");
+                    Console.WriteLine(text);
                 }
 
             } while (option != 0);

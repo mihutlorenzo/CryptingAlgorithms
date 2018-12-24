@@ -28,11 +28,10 @@ namespace CryptingAlgorithms.Algorithms
                 GetPosition(ref keySquare, char.ToUpper(tempText[i]), ref row, ref col);
                 cipheredCoord.Add(row);
                 cipheredCoord.Add(col);
-                plainText += keySquare[row, col].ToString();
             }
             for(int i = 0; i < cipheredCoord.Count; i++)
             {
-                if ((i != 0 && i % period == 0) || i == (cipheredCoord.Count))
+                if ((i != 0 && i % period == 0) || (i > (period * (cipheredCoord.Count/period)) && i == (period * (cipheredCoord.Count/period) + (cipheredCoord.Count % period)/2)))
                     switcher = !switcher;
                 if (switcher)
                 {
