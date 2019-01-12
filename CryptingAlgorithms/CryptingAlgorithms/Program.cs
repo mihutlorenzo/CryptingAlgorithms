@@ -59,7 +59,7 @@ namespace CryptingAlgorithms
             {
                 bool isInvalidOption = false;
 
-                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere  \n 4=Beaufort \n 5=Autokey \n 6=Four-Square \n 7=ColumnarTransposition \n 8=Bifid \n 0=Exit");
+                Console.WriteLine("Choose one of the following algorithms for the demo: \n 1=Caesar \n 2=Playfair \n 3=Vigenere  \n 4=Beaufort \n 5=Autokey \n 6=Four-Square \n 7=ColumnarTransposition \n 8=Bifid \n 9=Trifid \n 0=Exit");
                 option = Int32.Parse(Console.ReadLine());
 
                 string readPath = string.Empty;
@@ -152,6 +152,13 @@ namespace CryptingAlgorithms
                         key = Console.ReadLine();
                         cryptingAlgorithm = new BifidAlgorithm();
                         break;
+                    case 9:
+                        readPath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\TrifidCipherText.txt";
+                        writePath = @"E:\Repositories\Github\CryptingAlgorithms\CryptingAlgorithms\TrifidPlainText.txt";
+                        Console.WriteLine("Give the password:");
+                        key = Console.ReadLine();
+                        cryptingAlgorithm = new TrifidAlgorithm();
+                        break;
                     default:
                         Console.WriteLine("You chose an invalid option. Please choose a valid one!");
                         isInvalidOption = true;
@@ -161,6 +168,16 @@ namespace CryptingAlgorithms
 
                 if (!isInvalidOption && option != 1)
                 {
+                    //StreamReader reader = new StreamReader(writePath, System.Text.Encoding.UTF8);
+                    //string text = reader.ReadToEnd();
+                    //reader.Close();
+
+                    //text = cryptingAlgorithm.Encipher(text, key);
+
+                    //Console.WriteLine("The decrypted text is:");
+                    //Console.WriteLine(text);
+
+
                     StreamReader reader = new StreamReader(readPath, System.Text.Encoding.UTF8);
                     string text = reader.ReadToEnd();
                     reader.Close();

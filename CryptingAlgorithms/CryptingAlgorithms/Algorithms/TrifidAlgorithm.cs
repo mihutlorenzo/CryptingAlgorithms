@@ -6,51 +6,58 @@ using System.Threading.Tasks;
 
 namespace CryptingAlgorithms.Algorithms
 {
-    class BifidAlgorithm : ICryptingAlgorithm
+    class TrifidAlgorithm : ICryptingAlgorithm
     {
+
         private const int period = 5;
 
-        public string Decipher(string input, string decriptionKey)
+        public string Decipher(string input, string encriptionKey)
         {
             bool switcher = true;
             string plainText = string.Empty;
-            char[,] keySquare = GenerateKeySquare(decriptionKey);
+            char[,] keySquare = GenerateKeySquare(encriptionKey);
 
             string tempText = RemoveOtherCharsThanLetter(input);
-            IList<int> coordLine = new List<int>();
-            IList<int> coordColumn = new List<int>();
+            
             IList<int> cipheredCoord = new List<int>();
 
             for (int i = 0; i < tempText.Length; i++)
             {
-                int row = 0;
-                int col = 0;
+                int row1 = 0;
+                int col1 = 0;
 
-                GetPosition(ref keySquare, char.ToUpper(tempText[i]), ref row, ref col);
-                cipheredCoord.Add(row);
-                cipheredCoord.Add(col);
+                GetPosition(ref keySquare, char.ToUpper(tempText[i]), ref row1, ref col1);
+                cipheredCoord.Add((int)col1 / 3);
+                cipheredCoord.Add(row1);
+                cipheredCoord.Add(col1 % 3);
             }
-            for(int i = 0; i < cipheredCoord.Count; i++)
+
+            IList<int> coordLine = new List<int>();
+            IList<int> coordColumn = new List<int>();
+            IList<int> squareNumber = new List<int>();
+            
+            for (int i = 0; i < cipheredCoord.Count; i++)
             {
-                if ((i != 0 && i % period == 0) || (i > (period * (cipheredCoord.Count/period)) && i == (period * (cipheredCoord.Count/period) + (cipheredCoord.Count % period)/2)))
-                    switcher = !switcher;
-                if (switcher)
+                if(i%15 < 5)
+                {
+                    squareNumber.Add(cipheredCoord[i]);
+                }
+                else if(i%15 < 10)
                 {
                     coordLine.Add(cipheredCoord[i]);
                 }
-                else
+                else if (i % 15 < 15)
                 {
                     coordColumn.Add(cipheredCoord[i]);
                 }
             }
 
-            for(int i =0; i< coordLine.Count; i++)
+            for (int i = 0; i < coordLine.Count; i++)
             {
-                plainText += keySquare[coordLine[i], coordColumn[i]].ToString();
+                plainText += keySquare[coordLine[i], squareNumber[i]*3 + coordColumn[i]%3].ToString();
             }
             plainText = AdjustOutput(input, plainText);
             return plainText;
-            
         }
 
         public string Encipher(string input, string encriptionKey)
@@ -62,6 +69,7 @@ namespace CryptingAlgorithms.Algorithms
 
             IList<int> coordLine = new List<int>();
             IList<int> coordColumn = new List<int>();
+            IList<int> squareNumber = new List<int>();
             IList<int> cipheredCoord = new List<int>();
 
             for (int i = 0; i < tempText.Length; i++)
@@ -71,40 +79,48 @@ namespace CryptingAlgorithms.Algorithms
 
                 GetPosition(ref keySquare, char.ToUpper(tempText[i]), ref row1, ref col1);
                 coordLine.Add(row1);
-                coordColumn.Add(col1);
+                coordColumn.Add(col1%3);
+                squareNumber.Add((int)col1 / 3);
             }
 
-            for (int i = 0, j = 0; i <= tempText.Length; i++)
+            int[,] indexesMatrix = new int[3,9];
+
+            int numberOfDivisions = (int)Math.Ceiling((double)(input.Length / 5));
+
+            for (int i = 0; i< numberOfDivisions; i++)
             {
-                if ((i != 0) && (i % period == 0) || i == tempText.Length)
+                int j = 0;
+                while(j < 15)
                 {
-                    do
+                    if(j < 5 && ((i*5) + (j%5)) < squareNumber.Count)
                     {
-                        cipheredCoord.Add(coordColumn[j]);
-                        j++;
-                    } while (j % period != 0 && j < tempText.Length);
+                        cipheredCoord.Add(squareNumber[(i*5) + j%5]);
+                    }
+                    else if(j<10 && ((i * 5) + (j % 5)) < coordLine.Count)
+                    {
+                        cipheredCoord.Add(coordLine[(i * 5) + j % 5]);
+                    }
+                    else if(j<15 && ((i * 5) + (j % 5)) < coordColumn.Count)
+                    {
+                        cipheredCoord.Add(coordColumn[(i * 5) + j % 5]);
+                    }
+                    j++;
                 }
-                if (i < tempText.Length)
-                    cipheredCoord.Add(coordLine[i]);
             }
 
-
-
-            for (int i = 0; i < cipheredCoord.Count; i += 2)
+            for (int i = 0; i < cipheredCoord.Count; i += 3)
             {
-                cipheredText += keySquare[cipheredCoord[i], cipheredCoord[i + 1]];
+                cipheredText += keySquare[cipheredCoord[i+1], (cipheredCoord[i]*3) + (cipheredCoord[i+2]%3)];
             }
             cipheredText = AdjustOutput(input, cipheredText);
             return cipheredText;
         }
 
-
         private char[,] GenerateKeySquare(string key)
         {
-            char[,] keySquare = new char[5, 5];
-            string alphabetEN = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+            char[,] keySquare = new char[3, 9];
+            string alphabetEN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string tempKey = string.IsNullOrEmpty(key) ? "CIPHER" : key.ToUpper();
-            tempKey = tempKey.Replace("J", "");
             tempKey += alphabetEN;
 
             for (int i = 0; i < 25; i++)
@@ -113,10 +129,28 @@ namespace CryptingAlgorithms.Algorithms
                 tempKey = RemoveAllDuplicates(tempKey, indexes);
             }
 
-            tempKey = tempKey.Substring(0, 25);
+            tempKey = tempKey.Substring(0, 26);
 
-            for (int i = 0; i < 25; i++)
-                keySquare[(i / 5), (i % 5)] = tempKey[i];
+            int line = 0;
+            int column = 0;
+            int grid = 0;
+
+            for (int i = 0; i < 26; i++)
+            {
+                int col = (grid * 3) + column % 3;
+                keySquare[line, col] = tempKey[i];
+                column++;
+                if(column % 3 == 0)
+                {
+                    column = 0;
+                    line++;
+                    if(line %3 == 0)
+                    {
+                        grid++;
+                        line = 0;
+                    }
+                }
+            }
             return keySquare;
         }
 
@@ -167,8 +201,8 @@ namespace CryptingAlgorithms.Algorithms
 
         private void GetPosition(ref char[,] keySquare, char letter, ref int row, ref int column)
         {
-            for (int i = 0; i < 5; i++)
-                for (int j = 0; j < 5; j++)
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 9; j++)
                     if (keySquare[i, j] == letter)
                     {
                         row = i;
