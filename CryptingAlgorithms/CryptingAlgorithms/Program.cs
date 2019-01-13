@@ -17,9 +17,9 @@ namespace CryptingAlgorithms
         // cheie Autokey : BERCU
         // cheie FourSquare : BERCU|ADRIAN
         // cheie ColumnarTransposition : pangram
-        // PAROLA : DNFTBEIOFEONAWOE
-        // key: DNFTBEIOFAW
         // cheie Bifid : DANILACOSMIN
+        // cheie trifid: ALEXANDRU
+
         static void Main(string[] args)
         {
             ICryptingAlgorithm cryptingAlgorithm = new PlayfairAlgorithm();

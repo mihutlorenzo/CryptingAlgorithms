@@ -35,21 +35,49 @@ namespace CryptingAlgorithms.Algorithms
             IList<int> coordLine = new List<int>();
             IList<int> coordColumn = new List<int>();
             IList<int> squareNumber = new List<int>();
-            
+
+            int result = (int)cipheredCoord.Count / 15;
+            int rest = cipheredCoord.Count % 15;
+            int charactersInIncompleteSquare = rest / 3;
+            int j = 0;
+
             for (int i = 0; i < cipheredCoord.Count; i++)
             {
-                if(i%15 < 5)
+                if(i < result * 15)
                 {
-                    squareNumber.Add(cipheredCoord[i]);
+                    int number = cipheredCoord.Count % 15;
+
+                    if (i % 15 < 5)
+                    {
+                        squareNumber.Add(cipheredCoord[i]);
+                    }
+                    else if (i % 15 < 10)
+                    {
+                        coordLine.Add(cipheredCoord[i]);
+                    }
+                    else if (i % 15 < 15)
+                    {
+                        coordColumn.Add(cipheredCoord[i]);
+                    }
                 }
-                else if(i%15 < 10)
+                else
                 {
-                    coordLine.Add(cipheredCoord[i]);
+                    if((int)j / charactersInIncompleteSquare == 0)
+                    {
+                        squareNumber.Add(cipheredCoord[i]);
+                    }
+                    else if((int)j / charactersInIncompleteSquare == 1)
+                    {
+                        coordLine.Add(cipheredCoord[i]);
+                    }
+                    else if((int)j / charactersInIncompleteSquare == 2)
+                    {
+                        coordColumn.Add(cipheredCoord[i]);
+                    }
+
+                    j++;
                 }
-                else if (i % 15 < 15)
-                {
-                    coordColumn.Add(cipheredCoord[i]);
-                }
+               
             }
 
             for (int i = 0; i < coordLine.Count; i++)
@@ -85,7 +113,8 @@ namespace CryptingAlgorithms.Algorithms
 
             int[,] indexesMatrix = new int[3,9];
 
-            int numberOfDivisions = (int)Math.Ceiling((double)(input.Length / 5));
+            double numberOfCharacters = (double)tempText.Length / 5;
+            double numberOfDivisions = Math.Ceiling(numberOfCharacters);
 
             for (int i = 0; i< numberOfDivisions; i++)
             {
